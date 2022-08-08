@@ -11,8 +11,9 @@ const nav = [
   { link: "/authors", title: "Authors" },
   { link: "/books/admin", title: "Add Book" },
 ];
-
-dotenv.config();
+if(!process.env.NODE_ENV) {
+	dotenv.config();
+}
 
 const booksRouter = require("./src/routes/bookRoutes")(nav);
 const authorsRouter = require("./src/routes/authorRoutes")(nav);
