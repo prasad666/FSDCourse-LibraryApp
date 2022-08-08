@@ -1,0 +1,63 @@
+<%-include('header')-%>
+
+<!--/stories-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <form
+        role="form"
+        method="POST"
+        action="/books/add"
+        name="addbook"
+        enctype="multipart/form-data"
+      >
+        <div class="form-group">
+          <label for="txtTitle"> Title </label>
+          <input type="text" class="form-control" id="txtTitle" name="title" />
+        </div>
+
+        <div class="form-group">
+          <label for="txtAuthtor"> Author </label>
+          <input
+            type="text"
+            class="form-control"
+            id="txtAuthor"
+            name="author"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="optGenre"> Genre </label>
+
+          <select
+            name="genre"
+            required="required"
+            class="form-control"
+            id="optGenre"
+          >
+            <option value="">Please select a genre</option>
+            <%for(var i = 0; i< genres.length;i++){%>
+            <option><%=genres[i]%></option>
+            <%}%>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="uploadImage"> Image </label>
+          <input
+            type="file"
+            class="form-control-file"
+            id="uploadImage"
+            name="image"
+          />
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="bt-md btn btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--/stories-->
+<%-include('footer')-%>
