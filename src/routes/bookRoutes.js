@@ -2,6 +2,20 @@ const express = require("express");
 const booksRouter = express.Router(); //books router
 const Bookdata = require("../model/BookModel");
 const genres = require("../data/genres");
+//const multer = require("multer");
+//const upload = multer({ dest: "../public/uploads/" });
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "./public/uploads");
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 function router(nav) {
   booksRouter.get("/", function (req, res) {
@@ -28,13 +42,13 @@ function router(nav) {
     });
   });
 
-  booksRouter.post("/add", function (req, res) {
-    console.log(req);
+  booksRouter.post("/add", upload.single("image"), function (req, res) {
     var item = {
       title: req.body.title,
       author: req.body.author,
-      image: req.body.image,
+      image: `/uploads/${req.file.originalname}`,
     };
+    console.log(req);
     const book = new Bookdata(item);
     book.save();
     res.redirect("/books");

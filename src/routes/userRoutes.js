@@ -20,19 +20,43 @@ function router(nav) {
     });
   });
 
+  usersRouter.post("/register", function (req, res) {
+    console.log(req);
+    username = req.body.username;
+    password = req.body.password;
+    email = req.body.email;
+
+    var item = {
+      username: req.body.username,
+      password: req.body.password,
+      email: req.body.email,
+    };
+
+    const user = new Userdata(item);
+    user.save();
+    res.redirect("/users/login");
+  });
+
   usersRouter.post("/login", function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
     sess = req.session;
-    if (username == "admin" && password == "1234") {
-      sess.loggedIn = true;
-      res.redirect("/books/admin");
-      return;
-    }
-    res.render("login", {
-      nav,
-      title: "Login",
-      error: "Invalid username or password!",
+
+    const user = Userdata.findOne({
+      username: username,
+      password: password,
+    }).then(function (user) {
+      console.log(user);
+      if (user) {
+        sess.loggedIn = true;
+        res.redirect("/books/admin");
+        return;
+      }
+      res.render("login", {
+        nav,
+        title: "Login",
+        error: "Invalid username or password!",
+      });
     });
   });
 
