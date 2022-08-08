@@ -2,7 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const chalk = require("chalk");
 const path = require("path");
-const bodyparser = require("body-parser");
+
 const cors = require("cors");
 const dotenv = require("dotenv");
 
